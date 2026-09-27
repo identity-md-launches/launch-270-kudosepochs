@@ -1,0 +1,22 @@
+{
+  "kind": "evm_project",
+  "token": {
+    "contract": "LaunchToken",
+    "name": "Kudos",
+    "symbol": "KUDO",
+    "decimals": 18
+  },
+  "contracts": [
+    {
+      "contract": "KudosEpochs",
+      "constructorArgs": ["$token"]
+    }
+  ],
+  "pool": {
+    "pairedCurrency": "0x0000000000000000000000000000000000000000",
+    "fee": 3000,
+    "tickSpacing": 60,
+    "initialPrice": "79228162514264337593543950336"
+  },
+  "notes": "Kudos (KUDO) on Sepolia. LaunchToken (src/LaunchToken.sol) is a fixed-supply ERC-20 with no constructor arguments, 18 decimals and no mint/admin functions; it mints exactly 1,000,000,000 KUDO to msg.sender (the factory). KudosEpochs (src/KudosEpochs.sol) takes the launch token address as its only constructor argument (address token_ <- $token), stores it immutable as token() and records deployTimestamp; it needs no KUDO balance or approval at deploy. It has no owner, admin, pause or upgrade path, no payable/receive/fallback function, and no initialization calls. Each address may give 5 non-transferable kudos per 7-day epoch counted from deployment, with optional KUDO tips pulled via approve + safeTransferFrom and credited to the recipient's withdrawable balance; withdraw() is pull-based and nonReentrant. The pool pairs KUDO with native Sepolia ETH (zero address), fee 3000, tickSpacing 60, no hook; initialPrice is the 1:1 sqrtPriceX96 used only by legacy policies, as the pinned policy derives the opening price. Supply, allocations and ownership come from launch policy, not this manifest."
+}
